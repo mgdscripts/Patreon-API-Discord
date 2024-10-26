@@ -22,3 +22,55 @@ This bot interacts with the Patreon API to retrieve detailed information about m
 2. Install the `requests` library:
    ```bash
    pip install requests
+   ```
+
+### Configuration
+
+1. **Access Token**: Replace `access_token` with your Patreon API token.
+2. **Campaign ID**: Replace `campaign_id` with your Patreon campaign ID.
+3. **Campaign Name**: Set the `campaign_name` variable (used in the User-Agent header).
+
+### Code Explanation
+
+- **API Endpoint**: This bot uses the `/campaigns/{campaign_id}/members` endpoint to get member data, including their user information and currently entitled tiers.
+- **Fields to Include**:
+  - **Member Data**: Full name, email, patron status, last charge date, last charge status, pledge relationship start, and currently entitled amount.
+  - **User Data**: First and last names, email, and social connections (for Discord ID collection).
+  - **Tier Data**: Title and amount (for the currently entitled tier).
+- **Pagination**: The bot fetches data in batches of up to 1000 members per request and automatically follows pagination links to retrieve additional pages of members.
+- **File Handling**:
+  - `clear_file`: Clears `patreonmembers.txt` at the beginning of each run.
+  - `save_to_file`: Appends each member’s information to the text file.
+
+### Usage
+
+1. Run the bot:
+   ```bash
+   python patreon_collector.py
+   ```
+2. The bot will request data from the Patreon API, process it, and save it to `patreonmembers.txt`.
+
+### Example Workflow
+
+1. **Data Fetching**: The bot sends a GET request to the Patreon API for the specified campaign’s members.
+2. **Discord ID Collection**: For users with linked Discord accounts, it fetches and saves the Discord ID.
+3. **Tier Information**: For each member, it retrieves and formats their entitled tier(s), including tier name and pledge amount.
+4. **Data Storage**: Each member's information is saved in a formatted string in `patreonmembers.txt`.
+
+### Example Data Entry
+
+Each entry in `patreonmembers.txt` will look like this:
+```plaintext
+Name: John Doe, Email: johndoe@example.com, Patron Status: active, Last Charge Date: 2023-05-10, Discord ID: 1234567890, Tier: VIP Supporter ($10.00)
+```
+
+### Additional Notes
+
+- **Permissions**: Ensure your API token has permission to read campaign and member data.
+- **Patreon API**: This bot uses the v2 API; verify that the endpoint and fields match your API version.
+- **Error Handling**: If the API request fails, the bot logs the status code and response text for debugging.
+
+---
+
+This bot was designed to streamline member data collection from Patreon campaigns.
+```
