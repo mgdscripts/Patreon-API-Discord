@@ -46,7 +46,7 @@ This bot interacts with the Patreon API to retrieve detailed information about m
 
 1. Run the bot:
    ```bash
-   python patreon_collector.py
+   python main.py
    ```
 2. The bot will request data from the Patreon API, process it, and save it to `patreonmembers.txt`.
 
